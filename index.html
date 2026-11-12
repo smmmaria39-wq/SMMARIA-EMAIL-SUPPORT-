@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/css/style.css"/>
+<link rel="stylesheet" href="assets/css/dashboard.css"/>
+<link rel="stylesheet" href="assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body class="entry-body">
+
+<div class="entry-splash" role="status" aria-live="polite">
+  <div class="entry-logo" aria-hidden="true">
+    <svg viewBox="0 0 32 32" width="56" height="56"><rect width="32" height="32" rx="8" fill="#4F46E5"/><path d="M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z" fill="#fff" opacity=".9"/><path d="M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z" fill="#fff"/></svg>
+  </div>
+  <h1 class="entry-title">SMMARIA <span>Email Manager</span></h1>
+  <p class="entry-sub">Standalone email administration panel</p>
+  <div class="entry-spinner" aria-hidden="true"></div>
+  <p class="entry-hint">Checking your session&hellip;</p>
+  <noscript>
+    <p class="entry-noscript">JavaScript is required. <a href="login.html">Continue to login</a>.</p>
+  </noscript>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+  /**
+   * Entry point.
+   * Decides where the administrator goes based on the local session state only.
+   * Full token validation (against the email backend) happens on dashboard.html
+   * so no protected information is exposed here before authentication.
+   */
+  (function () {
+    var hasSession = false;
+    try {
+      hasSession = !!window.SMMAuth && typeof window.SMMAuth.hasSession === 'function' && window.SMMAuth.hasSession();
+    } catch (e) { hasSession = false; }
+
+    setTimeout(function () {
+      window.location.replace(hasSession ? 'dashboard.html' : 'login.html');
+    }, 350);
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Dashboard · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/css/style.css"/>
+<link rel="stylesheet" href="assets/css/dashboard.css"/>
+<link rel="stylesheet" href="assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="dashboard" data-root="" data-title="Dashboard" data-crumb="Overview" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <!-- Page head -->
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Email Dashboard</h1>
+          <p class="page-sub">Live overview of your SMMARIA email system.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary" id="dash-refresh" type="button">
+            <i data-lucide="refresh-cw" class="btn-icon"></i><span>Refresh</span>
+          </button>
+          <a class="btn btn-primary" href="pages/compose.html">
+            <i data-lucide="pen-line" class="btn-icon"></i><span>Compose Email</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- KPI grid: populated from GET /api/admin/dashboard/stats -->
+      <section class="kpi-grid" id="dash-kpis" aria-busy="true" aria-label="Key email statistics"></section>
+
+      <!-- Charts row -->
+      <section class="dash-grid-2">
+        <div class="card chart-card">
+          <div class="card-head">
+            <div>
+              <h2 class="card-title">Email activity</h2>
+              <p class="card-sub">Sent vs. failed over the last 14 days</p>
+            </div>
+            <span class="badge badge-neutral" id="dash-activity-source">backend time series</span>
+          </div>
+          <div class="chart-box" id="dash-activity-chart-box">
+            <canvas id="dash-activity-chart" height="240" aria-label="Email activity chart" role="img"></canvas>
+          </div>
+        </div>
+        <div class="card chart-card">
+          <div class="card-head">
+            <div>
+              <h2 class="card-title">Campaign performance</h2>
+              <p class="card-sub">Most recent campaigns by delivery</p>
+            </div>
+          </div>
+          <div class="chart-box" id="dash-campaign-chart-box">
+            <canvas id="dash-campaign-chart" height="240" aria-label="Campaign performance chart" role="img"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Queue + quick actions row -->
+      <section class="dash-grid-2 dash-grid-side">
+        <div class="card">
+          <div class="card-head">
+            <div><h2 class="card-title">Queue status</h2><p class="card-sub">From <code>GET /api/admin/queue/stats</code></p></div>
+            <a class="link-btn" href="pages/queue.html">Open queue <i data-lucide="arrow-up-right"></i></a>
+          </div>
+          <div id="dash-queue-status" aria-busy="true"></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div><h2 class="card-title">Quick actions</h2><p class="card-sub">Common administration shortcuts</p></div>
+          </div>
+          <div class="quick-actions">
+            <a class="quick-action" href="pages/compose.html">
+              <span class="qa-icon qa-indigo"><i data-lucide="pen-line"></i></span>
+              <span class="qa-label">Compose email</span>
+              <span class="qa-sub">Send to one or more recipients</span>
+            </a>
+            <a class="quick-action" href="pages/campaigns.html?action=create">
+              <span class="qa-icon qa-blue"><i data-lucide="megaphone"></i></span>
+              <span class="qa-label">Create campaign</span>
+              <span class="qa-sub">Bulk email to a subscriber segment</span>
+            </a>
+            <a class="quick-action" href="pages/templates.html?action=create">
+              <span class="qa-icon qa-amber"><i data-lucide="layout-template"></i></span>
+              <span class="qa-label">Manage templates</span>
+              <span class="qa-sub">Reusable email designs</span>
+            </a>
+            <a class="quick-action" href="pages/subscribers.html">
+              <span class="qa-icon qa-green"><i data-lucide="users"></i></span>
+              <span class="qa-label">View subscribers</span>
+              <span class="qa-sub">Audience and subscription status</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent activity + failures -->
+      <section class="dash-grid-2">
+        <div class="card">
+          <div class="card-head">
+            <div><h2 class="card-title">Recent email activity</h2><p class="card-sub">Latest emails processed by the backend</p></div>
+            <a class="link-btn" href="pages/email-history.html">View all <i data-lucide="arrow-up-right"></i></a>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="dash-recent-emails">
+              <thead><tr><th>Recipient</th><th>Subject</th><th>Status</th><th>Time</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="state-box" id="dash-recent-emails-state"></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div><h2 class="card-title">Recent campaigns</h2><p class="card-sub">Latest campaign records</p></div>
+            <a class="link-btn" href="pages/campaigns.html">View all <i data-lucide="arrow-up-right"></i></a>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="dash-recent-campaigns">
+              <thead><tr><th>Campaign</th><th>Status</th><th>Recipients</th><th>Sent</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="state-box" id="dash-recent-campaigns-state"></div>
+        </div>
+      </section>
+
+      <!-- Recent failures -->
+      <section class="card">
+        <div class="card-head">
+          <div><h2 class="card-title">Recent failures</h2><p class="card-sub">Failed or bounced emails needing attention</p></div>
+          <a class="link-btn" href="pages/email-history.html?status=failed">All failures <i data-lucide="arrow-up-right"></i></a>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="dash-failures">
+            <thead><tr><th>Recipient</th><th>Subject</th><th>Error</th><th>Time</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="state-box" id="dash-failures-state"></div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span id="footer-brand">SMMARIA Email Manager</span>
+      <span class="footer-sep">·</span>
+      <span>Connected to <code id="footer-api">—</code></span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/dashboard.js"></script>
+</body>
+</html>

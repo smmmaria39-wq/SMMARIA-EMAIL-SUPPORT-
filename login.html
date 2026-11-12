@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Administrator Login · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/css/style.css"/>
+<link rel="stylesheet" href="assets/css/dashboard.css"/>
+<link rel="stylesheet" href="assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body class="auth-body">
+
+<main class="auth-layout" aria-label="Administrator login">
+  <!-- Brand panel (desktop only) -->
+  <aside class="auth-brand" aria-hidden="true">
+    <div class="auth-brand-inner">
+      <div class="auth-brand-logo">
+        <svg viewBox="0 0 32 32" width="44" height="44"><rect width="32" height="32" rx="8" fill="#fff" fill-opacity=".14"/><path d="M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z" fill="#fff" opacity=".92"/><path d="M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z" fill="#fff"/></svg>
+        <span>SMMARIA</span>
+      </div>
+      <h2 class="auth-brand-title">Email Manager</h2>
+      <p class="auth-brand-text">The standalone administration panel for SMMARIA email delivery &mdash; campaigns, subscribers, templates, automations, queue monitoring and analytics, all in one place.</p>
+      <ul class="auth-brand-points">
+        <li><i data-lucide="shield-check"></i>Administrator-only access, enforced by the backend</li>
+        <li><i data-lucide="send"></i>Campaign and transactional email delivery</li>
+        <li><i data-lucide="activity"></i>Real-time queue and delivery monitoring</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Login form panel -->
+  <section class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-card-head">
+        <div class="auth-card-logo">
+          <svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="8" fill="#4F46E5"/><path d="M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z" fill="#fff" opacity=".9"/><path d="M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z" fill="#fff"/></svg>
+        </div>
+        <h1>Welcome back</h1>
+        <p>Sign in to the SMMARIA Email Manager</p>
+      </div>
+
+      <!-- Backend not configured warning (shown by auth JS when API URL is still the placeholder) -->
+      <div class="alert alert-warning hidden" id="login-config-warning" role="alert">
+        <i data-lucide="settings-2"></i>
+        <div>
+          <strong>Backend not configured.</strong>
+          <p>Open <code>assets/js/config.js</code> and set <code>API_BASE_URL</code> to your SMMARIA Email Backend URL before signing in.</p>
+        </div>
+      </div>
+
+      <!-- Error message area -->
+      <div class="alert alert-danger hidden" id="login-error" role="alert" aria-live="assertive">
+        <i data-lucide="alert-circle"></i>
+        <div><strong id="login-error-title">Sign-in failed</strong><p id="login-error-text"></p></div>
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email address</label>
+          <div class="input-wrap">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input type="email" id="login-email" name="email" class="form-input has-icon" autocomplete="username"
+                   placeholder="admin@smmaria.com" required spellcheck="false" autocapitalize="off"/>
+          </div>
+          <p class="form-error hidden" id="login-email-error"></p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <div class="input-wrap">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input type="password" id="login-password" name="password" class="form-input has-icon has-trailing"
+                   autocomplete="current-password" placeholder="Enter your password" required/>
+            <button type="button" class="input-trailing" id="toggle-password"
+                    aria-label="Show password" aria-pressed="false">
+              <i data-lucide="eye" id="pwd-eye"></i>
+            </button>
+          </div>
+          <p class="form-error hidden" id="login-password-error"></p>
+        </div>
+
+        <div class="form-row between">
+          <label class="checkbox">
+            <input type="checkbox" id="login-remember"/>
+            <span class="checkbox-box" aria-hidden="true"><i data-lucide="check"></i></span>
+            <span>Remember me on this device</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-submit">
+          <span class="btn-spinner hidden" aria-hidden="true"></span>
+          <i data-lucide="log-in" class="btn-icon" id="login-btn-icon"></i>
+          <span id="login-btn-label">Sign in securely</span>
+        </button>
+      </form>
+
+      <p class="auth-footnote">
+        Protected area &mdash; authorized SMMARIA administrators only.<br/>
+        Authentication is verified against the SMMARIA Email Backend.
+      </p>
+    </div>
+    <p class="auth-version" id="auth-version"></p>
+  </section>
+</main>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/ui.js"></script>
+<script>
+  /**
+   * Login page controller.
+   * - Already-authenticated visitors are redirected to the dashboard.
+   * - Credentials are verified ONLY against the email backend (POST /api/auth/login).
+   */
+  // Tell api.js that a 401 on THIS page must show an inline error,
+  // not trigger the global logout/redirect cycle.
+  window.SMM_IS_LOGIN_PAGE = true;
+
+  (function () {
+    // If a valid local session already exists, go straight to the dashboard.
+    if (window.SMMAuth && window.SMMAuth.hasSession()) {
+      window.location.replace('dashboard.html');
+      return;
+    }
+
+    var form = document.getElementById('login-form');
+    var emailEl = document.getElementById('login-email');
+    var pwdEl = document.getElementById('login-password');
+    var rememberEl = document.getElementById('login-remember');
+    var submitBtn = document.getElementById('login-submit');
+    var errorBox = document.getElementById('login-error');
+    var errorText = document.getElementById('login-error-text');
+    var errorTitle = document.getElementById('login-error-title');
+    var configWarn = document.getElementById('login-config-warning');
+    var eyeBtn = document.getElementById('toggle-password');
+
+    // Backend configuration check (placeholder URL detection).
+    var cfg = window.EMAIL_SYSTEM_CONFIG || {};
+    var base = String(cfg.API_BASE_URL || '');
+    if (!base || base.indexOf('YOUR-EMAIL-BACKEND-URL') !== -1) {
+      configWarn.classList.remove('hidden');
+    }
+
+    // Show / hide password.
+    eyeBtn.addEventListener('click', function () {
+      var show = pwdEl.type === 'password';
+      pwdEl.type = show ? 'text' : 'password';
+      eyeBtn.setAttribute('aria-pressed', String(show));
+      eyeBtn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+      document.getElementById('pwd-eye').innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+        (show
+          ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+          : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>') +
+        '</svg>';
+    });
+
+    function showError(title, text) {
+      errorTitle.textContent = title;
+      errorText.textContent = text;
+      errorBox.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+    function hideError() { errorBox.classList.add('hidden'); }
+    function setLoading(on) {
+      submitBtn.disabled = on;
+      submitBtn.classList.toggle('is-loading', on);
+      submitBtn.querySelector('.btn-spinner').classList.toggle('hidden', !on);
+      document.getElementById('login-btn-icon').classList.toggle('hidden', on);
+      document.getElementById('login-btn-label').textContent = on ? 'Verifying credentials…' : 'Sign in securely';
+    }
+    function setFieldError(id, msg) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = msg || '';
+      el.classList.toggle('hidden', !msg);
+    }
+
+    // Restore remembered email (convenience only — never the password).
+    try {
+      var remembered = localStorage.getItem('smm_remembered_email');
+      if (remembered) { emailEl.value = remembered; rememberEl.checked = true; }
+    } catch (e) { /* storage unavailable */ }
+
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      hideError();
+      setFieldError('login-email-error', '');
+      setFieldError('login-password-error', '');
+
+      var email = emailEl.value.trim();
+      var password = pwdEl.value;
+      var valid = true;
+      if (!email) { setFieldError('login-email-error', 'Please enter your email address.'); valid = false; }
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setFieldError('login-email-error', 'Please enter a valid email address.'); valid = false; }
+      if (!password) { setFieldError('login-password-error', 'Please enter your password.'); valid = false; }
+      if (!valid) return;
+
+      setLoading(true);
+      window.SMMAuth.login(email, password, rememberEl.checked)
+        .then(function () {
+          try {
+            if (rememberEl.checked) localStorage.setItem('smm_remembered_email', email);
+            else localStorage.removeItem('smm_remembered_email');
+          } catch (e) { /* ignore */ }
+          window.location.replace('dashboard.html');
+        })
+        .catch(function (err) {
+          setLoading(false);
+          var kind = err && err.kind;
+          if (kind === 'UNAUTHORIZED' || kind === 'VALIDATION') {
+            showError('Invalid credentials', (err.message || 'The email address or password is incorrect.'));
+          } else if (kind === 'NOT_FOUND') {
+            showError('Endpoint missing', (err.message || 'The backend login endpoint was not found (404). Verify the email backend is deployed and that its login route matches the mapping in assets/js/config.js.'));
+          } else if (kind === 'NETWORK' || kind === 'TIMEOUT') {
+            showError('Cannot reach the email backend', (err.message || 'Check your internet connection and confirm the backend URL in assets/js/config.js is correct and reachable.'));
+          } else if (kind === 'SERVER') {
+            showError('Backend error', (err.message || 'The email backend reported an internal error. Please try again later.'));
+          } else {
+            showError('Sign-in failed', (err && err.message) || 'An unexpected error occurred. Please try again.');
+          }
+        });
+    });
+
+    if (window.lucide) lucide.createIcons();
+    var v = document.getElementById('auth-version');
+    if (v && window.EMAIL_SYSTEM_CONFIG) v.textContent = window.EMAIL_SYSTEM_CONFIG.APP_NAME + ' v' + (window.EMAIL_SYSTEM_CONFIG.VERSION || '1.0');
+  })();
+</script>
+</body>
+</html>
