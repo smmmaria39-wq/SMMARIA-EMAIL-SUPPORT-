@@ -21,7 +21,7 @@ var EMAIL_SYSTEM_CONFIG = {
    * Backend connection
    * ------------------------------------------------------------------ */
   /** Origin of the SMMARIA Email Backend. No trailing slash. */
-  API_BASE_URL: 'https://YOUR-EMAIL-BACKEND-URL.com',
+  API_BASE_URL: 'https://smmaria-email-backend-production.up.railway.app',
 
   /** Request timeout in milliseconds. */
   REQUEST_TIMEOUT: 30000,
