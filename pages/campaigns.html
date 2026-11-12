@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Campaigns · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"/>
+<link rel="stylesheet" href="../assets/css/style.css"/>
+<link rel="stylesheet" href="../assets/css/dashboard.css"/>
+<link rel="stylesheet" href="../assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="campaigns" data-root="../" data-title="Campaigns" data-crumb="Email Marketing" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Email Campaigns</h1>
+          <p class="page-sub">Create, schedule and monitor bulk email campaigns.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary" id="campaigns-refresh" type="button">
+            <i data-lucide="refresh-cw" class="btn-icon"></i><span>Refresh</span>
+          </button>
+          <button class="btn btn-primary" id="campaigns-create" type="button">
+            <i data-lucide="plus" class="btn-icon"></i><span>New campaign</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <section class="card filter-bar" aria-label="Campaign filters">
+        <div class="filter-grid">
+          <div class="input-wrap">
+            <i data-lucide="search" class="input-icon"></i>
+            <input type="search" id="campaigns-search" class="form-input has-icon" placeholder="Search by name or subject…" aria-label="Search campaigns"/>
+          </div>
+          <select id="campaigns-status" class="form-input" aria-label="Filter by status">
+            <option value="">All statuses</option>
+            <option value="draft">Draft</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="processing">Processing</option>
+            <option value="sent">Sent</option>
+            <option value="completed">Completed</option>
+            <option value="failed">Failed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <input type="date" id="campaigns-from" class="form-input" aria-label="Created from date"/>
+          <input type="date" id="campaigns-to" class="form-input" aria-label="Created to date"/>
+          <button class="btn btn-ghost" id="campaigns-clear" type="button" title="Clear filters">
+            <i data-lucide="x" class="btn-icon"></i><span>Clear</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Table -->
+      <section class="card table-card">
+        <div class="table-wrap">
+          <table class="data-table" id="campaigns-table">
+            <thead>
+              <tr>
+                <th>Campaign</th><th>Status</th><th>Recipients</th><th>Sent</th><th>Failed</th><th>Created</th><th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="state-box" id="campaigns-state" aria-live="polite"></div>
+        <div class="table-footer">
+          <div class="table-info" id="campaigns-info"></div>
+          <nav class="pagination" id="campaigns-pagination" aria-label="Campaigns pagination"></nav>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span>SMMARIA Email Manager</span><span class="footer-sep">·</span><span>Campaigns</span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/campaigns.js"></script>
+</body>
+</html>

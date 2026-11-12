@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Analytics · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/style.css"/>
+<link rel="stylesheet" href="../assets/css/dashboard.css"/>
+<link rel="stylesheet" href="../assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="analytics" data-root="../" data-title="Analytics" data-crumb="Insights" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Email Analytics</h1>
+          <p class="page-sub">Delivery performance over time. Only metrics the backend actually provides are shown.</p>
+        </div>
+        <div class="page-actions">
+          <div class="range-picker" role="group" aria-label="Date range">
+            <button class="chip active" data-range="7" type="button">7 days</button>
+            <button class="chip" data-range="30" type="button">30 days</button>
+            <button class="chip" data-range="90" type="button">90 days</button>
+          </div>
+          <button class="btn btn-secondary" id="anl-export" type="button">
+            <i data-lucide="download" class="btn-icon"></i><span>Export CSV</span>
+          </button>
+          <button class="btn btn-primary" id="anl-refresh" type="button">
+            <i data-lucide="refresh-cw" class="btn-icon"></i><span>Apply</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Custom range -->
+      <section class="card filter-bar" aria-label="Custom date range">
+        <div class="filter-grid">
+          <div class="input-wrap">
+            <i data-lucide="calendar" class="input-icon"></i>
+            <input type="date" id="anl-from" class="form-input has-icon" aria-label="Analytics from date"/>
+          </div>
+          <div class="input-wrap">
+            <i data-lucide="calendar-check" class="input-icon"></i>
+            <input type="date" id="anl-to" class="form-input has-icon" aria-label="Analytics to date"/>
+          </div>
+          <span class="form-hint">Or pick a preset above. Custom dates override the preset.</span>
+        </div>
+      </section>
+
+      <!-- KPI cards -->
+      <section class="kpi-grid" id="anl-kpis" aria-busy="true" aria-label="Analytics metrics"></section>
+
+      <!-- Charts -->
+      <section class="dash-grid-2">
+        <div class="card chart-card">
+          <div class="card-head">
+            <div><h2 class="card-title">Email volume</h2><p class="card-sub">Sent and failed per period</p></div>
+          </div>
+          <div class="chart-box"><canvas id="anl-volume-chart" height="240" aria-label="Email volume chart" role="img"></canvas></div>
+          <div class="state-box" id="anl-volume-state"></div>
+        </div>
+        <div class="card chart-card">
+          <div class="card-head">
+            <div><h2 class="card-title">Subscriber growth</h2><p class="card-sub">New subscribers per period</p></div>
+          </div>
+          <div class="chart-box"><canvas id="anl-growth-chart" height="240" aria-label="Subscriber growth chart" role="img"></canvas></div>
+          <div class="state-box" id="anl-growth-state"></div>
+        </div>
+      </section>
+
+      <!-- Campaign performance table -->
+      <section class="card table-card">
+        <div class="card-head">
+          <div><h2 class="card-title">Campaign performance</h2><p class="card-sub" id="anl-campaign-sub">Campaigns in the selected period</p></div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="anl-campaign-table">
+            <thead>
+              <tr><th>Campaign</th><th>Status</th><th>Recipients</th><th>Sent</th><th>Failed</th><th>Delivery rate</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="state-box" id="anl-campaign-state"></div>
+      </section>
+
+      <!-- Unsupported metrics notice -->
+      <section class="card" id="anl-tracking-note"></section>
+    </main>
+
+    <footer class="page-footer">
+      <span>SMMARIA Email Manager</span><span class="footer-sep">·</span><span>Analytics</span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/analytics.js"></script>
+</body>
+</html>

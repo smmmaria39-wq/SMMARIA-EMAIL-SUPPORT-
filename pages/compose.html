@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Compose Email · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"/>
+<link rel="stylesheet" href="../assets/css/style.css"/>
+<link rel="stylesheet" href="../assets/css/dashboard.css"/>
+<link rel="stylesheet" href="../assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="compose" data-root="../" data-title="Compose Email" data-crumb="Email Marketing" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Compose Email</h1>
+          <p class="page-sub">Send transactional email through the SMMARIA Email Backend.</p>
+        </div>
+        <div class="page-actions compose-actions">
+          <button class="btn btn-secondary" id="compose-load-template" type="button">
+            <i data-lucide="layout-template" class="btn-icon"></i><span>Load template</span>
+          </button>
+          <button class="btn btn-secondary" id="compose-preview" type="button">
+            <i data-lucide="eye" class="btn-icon"></i><span>Preview</span>
+          </button>
+          <button class="btn btn-secondary" id="compose-test" type="button">
+            <i data-lucide="flask-conical" class="btn-icon"></i><span>Send test</span>
+          </button>
+          <button class="btn btn-secondary" id="compose-save-draft" type="button">
+            <i data-lucide="save" class="btn-icon"></i><span>Save draft</span>
+          </button>
+          <button class="btn btn-primary" id="compose-send" type="button">
+            <i data-lucide="send" class="btn-icon"></i><span>Send email</span>
+          </button>
+        </div>
+      </div>
+
+      <form id="compose-form" novalidate>
+        <div class="compose-layout">
+          <!-- Editor column -->
+          <div class="compose-main">
+            <section class="card compose-editor-card">
+              <!-- Recipients -->
+              <div class="form-group">
+                <label class="form-label" for="compose-to">Recipients <span class="req">*</span></label>
+                <div class="recipients-box" id="compose-recipients-box">
+                  <div class="recipient-chips" id="compose-chips" aria-label="Selected recipients"></div>
+                  <div class="recipient-input-row">
+                    <input type="text" id="compose-to" class="recipient-input" autocomplete="off" spellcheck="false"
+                           placeholder="Type an email address and press Enter…"/>
+                    <button type="button" class="btn btn-ghost btn-sm" id="compose-pick-subscribers">
+                      <i data-lucide="users" class="btn-icon"></i><span>Pick subscribers</span>
+                    </button>
+                  </div>
+                </div>
+                <p class="form-hint">Press Enter or comma to add an address. Duplicates and invalid formats are rejected. Unsubscribed / suppressed addresses are blocked by the backend.</p>
+                <p class="form-error hidden" id="compose-to-error"></p>
+              </div>
+
+              <!-- Subject -->
+              <div class="form-group">
+                <label class="form-label" for="compose-subject">Subject <span class="req">*</span></label>
+                <input type="text" id="compose-subject" class="form-input" maxlength="255" placeholder="What is this email about?"/>
+                <p class="form-error hidden" id="compose-subject-error"></p>
+              </div>
+
+              <!-- Sender -->
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="compose-from-name">Sender name</label>
+                  <input type="text" id="compose-from-name" class="form-input" placeholder="SMMARIA"/>
+                  <p class="form-hint">Defaults to the system sender if left empty.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="compose-from-email">Sender email</label>
+                  <input type="email" id="compose-from-email" class="form-input" placeholder="no-reply@smmaria.com"/>
+                  <p class="form-hint">Must be an approved sender on the backend.</p>
+                </div>
+              </div>
+
+              <!-- Rich text editor -->
+              <div class="form-group">
+                <div class="editor-head">
+                  <label class="form-label">Message <span class="req">*</span></label>
+                  <div class="editor-mode-toggle" role="tablist" aria-label="Editor mode">
+                    <button type="button" class="chip active" id="mode-rich" role="tab" aria-selected="true">Rich text</button>
+                    <button type="button" class="chip" id="mode-html" role="tab" aria-selected="false">HTML source</button>
+                  </div>
+                </div>
+                <div id="compose-editor-container">
+                  <div id="compose-editor" class="quill-editor" style="min-height:280px"></div>
+                </div>
+                <div id="compose-editor-html-wrap" class="hidden">
+                  <textarea id="compose-editor-html" class="form-input code-editor" rows="16"
+                            spellcheck="false" aria-label="HTML source"></textarea>
+                  <p class="form-hint">Only edit HTML if you are confident in the markup. It is rendered in a sandboxed preview.</p>
+                </div>
+                <p class="form-error hidden" id="compose-content-error"></p>
+              </div>
+            </section>
+          </div>
+
+          <!-- Side column -->
+          <aside class="compose-side">
+            <section class="card">
+              <div class="card-head"><div><h2 class="card-title">Delivery</h2></div></div>
+              <div class="form-group">
+                <label class="form-label" for="compose-email-type">Email type</label>
+                <select id="compose-email-type" class="form-input">
+                  <option value="manual">Manual</option>
+                  <option value="notification">Notification</option>
+                  <option value="support">Support</option>
+                  <option value="marketing">Marketing</option>
+                </select>
+                <p class="form-hint">Classification used in email history.</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="compose-notes">Internal note <span class="optional">(optional)</span></label>
+                <textarea id="compose-notes" class="form-input" rows="3" placeholder="Visible to administrators only"></textarea>
+              </div>
+              <div class="divider"></div>
+              <div class="compose-summary" id="compose-summary">
+                <div class="summary-row"><span>Recipients</span><strong id="sum-recipients">0</strong></div>
+                <div class="summary-row"><span>Subject</span><strong id="sum-subject">—</strong></div>
+                <div class="summary-row"><span>Editor</span><strong id="sum-editor">Rich text</strong></div>
+                <div class="summary-row"><span>Draft saved</span><strong id="sum-draft">No</strong></div>
+              </div>
+            </section>
+
+            <section class="card">
+              <div class="card-head"><div><h2 class="card-title">Draft</h2></div></div>
+              <p class="form-hint" style="margin-bottom:10px">Drafts are stored locally on this device until the backend provides a drafts endpoint. Sending requires the backend endpoint.</p>
+              <div id="compose-draft-info" class="draft-info"></div>
+              <button type="button" class="btn btn-ghost btn-sm btn-block danger-text" id="compose-clear-draft">
+                <i data-lucide="trash-2" class="btn-icon"></i><span>Clear local draft</span>
+              </button>
+            </section>
+          </aside>
+        </div>
+      </form>
+    </main>
+
+    <footer class="page-footer">
+      <span>SMMARIA Email Manager</span><span class="footer-sep">·</span><span>Compose</span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/compose.js"></script>
+</body>
+</html>

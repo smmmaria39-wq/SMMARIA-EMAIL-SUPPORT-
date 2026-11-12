@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Suppressions · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/style.css"/>
+<link rel="stylesheet" href="../assets/css/dashboard.css"/>
+<link rel="stylesheet" href="../assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="suppressions" data-root="../" data-title="Suppressions" data-crumb="Operations" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Suppressions</h1>
+          <p class="page-sub">Addresses that must never receive email. The backend enforces this list on every send.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary" id="supp-refresh" type="button">
+            <i data-lucide="refresh-cw" class="btn-icon"></i><span>Refresh</span>
+          </button>
+          <button class="btn btn-primary" id="supp-add" type="button">
+            <i data-lucide="shield-plus" class="btn-icon"></i><span>Add suppression</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="alert alert-info" id="supp-policy-note">
+        <i data-lucide="info"></i>
+        <div><strong>Suppression is enforced by the backend.</strong>
+        <p>Campaigns and automations skip suppressed, unsubscribed and complained addresses regardless of selection made here. Removing an entry only re-allows <em>future</em> email; it does not undo history.</p></div>
+      </div>
+
+      <!-- Filters -->
+      <section class="card filter-bar" aria-label="Suppression filters">
+        <div class="filter-grid">
+          <div class="input-wrap">
+            <i data-lucide="search" class="input-icon"></i>
+            <input type="search" id="supp-search" class="form-input has-icon" placeholder="Search by email address…" aria-label="Search suppressions"/>
+          </div>
+          <select id="supp-reason" class="form-input" aria-label="Filter by reason">
+            <option value="">All reasons</option>
+            <option value="unsubscribed">Unsubscribed</option>
+            <option value="hard_bounce">Hard bounce</option>
+            <option value="spam_complaint">Spam complaint</option>
+            <option value="invalid">Invalid address</option>
+            <option value="admin_blocked">Administrator blocked</option>
+          </select>
+          <button class="btn btn-ghost" id="supp-clear" type="button" title="Clear filters">
+            <i data-lucide="x" class="btn-icon"></i><span>Clear</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Table -->
+      <section class="card table-card">
+        <div class="table-wrap">
+          <table class="data-table" id="supp-table">
+            <thead>
+              <tr>
+                <th>Email address</th><th>Reason</th><th>Source</th><th>Date added</th><th>Status</th><th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="state-box" id="supp-state" aria-live="polite"></div>
+        <div class="table-footer">
+          <div class="table-info" id="supp-info"></div>
+          <nav class="pagination" id="supp-pagination" aria-label="Suppressions pagination"></nav>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span>SMMARIA Email Manager</span><span class="footer-sep">·</span><span>Suppressions</span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/suppressions.js"></script>
+</body>
+</html>

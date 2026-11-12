@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Email History · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/style.css"/>
+<link rel="stylesheet" href="../assets/css/dashboard.css"/>
+<link rel="stylesheet" href="../assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="email-history" data-root="../" data-title="Email History" data-crumb="Email Marketing" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Email History</h1>
+          <p class="page-sub">Every email processed by the backend, with delivery status and provider responses.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary" id="hist-refresh" type="button">
+            <i data-lucide="refresh-cw" class="btn-icon"></i><span>Refresh</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <section class="card filter-bar" aria-label="Email history filters">
+        <div class="filter-grid">
+          <div class="input-wrap">
+            <i data-lucide="search" class="input-icon"></i>
+            <input type="search" id="hist-search" class="form-input has-icon" placeholder="Search by recipient or subject…" aria-label="Search email history"/>
+          </div>
+          <select id="hist-status" class="form-input" aria-label="Filter by delivery status">
+            <option value="">All statuses</option>
+            <option value="queued">Queued</option>
+            <option value="processing">Processing</option>
+            <option value="accepted">Accepted by provider</option>
+            <option value="sent">Sent</option>
+            <option value="delivered">Delivered</option>
+            <option value="failed">Failed</option>
+            <option value="bounced">Bounced</option>
+          </select>
+          <select id="hist-type" class="form-input" aria-label="Filter by email type">
+            <option value="">All types</option>
+            <option value="manual">Manual</option>
+            <option value="campaign">Campaign</option>
+            <option value="automation">Automation</option>
+            <option value="announcement">Announcement</option>
+            <option value="invoice">Invoice</option>
+            <option value="notification">Notification</option>
+            <option value="welcome">Welcome</option>
+            <option value="order">Order</option>
+            <option value="payment">Payment</option>
+            <option value="system">System</option>
+          </select>
+          <input type="date" id="hist-from" class="form-input" aria-label="From date"/>
+          <input type="date" id="hist-to" class="form-input" aria-label="To date"/>
+          <button class="btn btn-ghost" id="hist-clear" type="button" title="Clear filters">
+            <i data-lucide="x" class="btn-icon"></i><span>Clear</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Table -->
+      <section class="card table-card">
+        <div class="table-wrap">
+          <table class="data-table" id="hist-table">
+            <thead>
+              <tr>
+                <th>Recipient</th><th>Subject</th><th>Type</th><th>Status</th><th>Date &amp; time</th><th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="state-box" id="hist-state" aria-live="polite"></div>
+        <div class="table-footer">
+          <div class="table-info" id="hist-info"></div>
+          <nav class="pagination" id="hist-pagination" aria-label="Email history pagination"></nav>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span>SMMARIA Email Manager</span><span class="footer-sep">·</span><span>Email History</span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/email-history.js"></script>
+</body>
+</html>

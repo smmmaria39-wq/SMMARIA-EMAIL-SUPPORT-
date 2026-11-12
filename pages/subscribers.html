@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Subscribers · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/style.css"/>
+<link rel="stylesheet" href="../assets/css/dashboard.css"/>
+<link rel="stylesheet" href="../assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="subscribers" data-root="../" data-title="Subscribers" data-crumb="Audience" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Subscribers</h1>
+          <p class="page-sub">Manage your email audience and subscription status.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary" id="subs-import" type="button">
+            <i data-lucide="upload" class="btn-icon"></i><span>Import CSV</span>
+          </button>
+          <button class="btn btn-secondary" id="subs-export" type="button">
+            <i data-lucide="download" class="btn-icon"></i><span>Export</span>
+          </button>
+          <button class="btn btn-primary" id="subs-add" type="button">
+            <i data-lucide="user-plus" class="btn-icon"></i><span>Add subscriber</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bulk action bar (appears when rows selected) -->
+      <section class="bulk-bar hidden" id="subs-bulkbar" aria-live="polite">
+        <span><strong id="subs-bulk-count">0</strong> selected</span>
+        <div class="bulk-actions">
+          <button class="btn btn-sm btn-secondary" id="subs-bulk-resubscribe" type="button">Re-subscribe</button>
+          <button class="btn btn-sm btn-secondary" id="subs-bulk-unsubscribe" type="button">Unsubscribe</button>
+          <button class="btn btn-sm btn-danger" id="subs-bulk-delete" type="button">Delete</button>
+          <button class="btn btn-sm btn-ghost" id="subs-bulk-clear" type="button">Clear selection</button>
+        </div>
+      </section>
+
+      <!-- Filters -->
+      <section class="card filter-bar" aria-label="Subscriber filters">
+        <div class="filter-grid">
+          <div class="input-wrap">
+            <i data-lucide="search" class="input-icon"></i>
+            <input type="search" id="subs-search" class="form-input has-icon" placeholder="Search by email or name…" aria-label="Search subscribers"/>
+          </div>
+          <select id="subs-status" class="form-input" aria-label="Filter by status">
+            <option value="">All statuses</option>
+            <option value="active">Active</option>
+            <option value="unsubscribed">Unsubscribed</option>
+            <option value="bounced">Bounced</option>
+            <option value="complained">Spam complaint</option>
+          </select>
+          <input type="date" id="subs-from" class="form-input" aria-label="Registered from date"/>
+          <input type="date" id="subs-to" class="form-input" aria-label="Registered to date"/>
+          <button class="btn btn-ghost" id="subs-clear" type="button" title="Clear filters">
+            <i data-lucide="x" class="btn-icon"></i><span>Clear</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Table -->
+      <section class="card table-card">
+        <div class="table-wrap">
+          <table class="data-table" id="subs-table">
+            <thead>
+              <tr>
+                <th class="th-check"><input type="checkbox" id="subs-check-all" aria-label="Select all subscribers on this page"/></th>
+                <th>Email</th><th>Name</th><th>Status</th><th>Registered</th><th>Last activity</th><th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="state-box" id="subs-state" aria-live="polite"></div>
+        <div class="table-footer">
+          <div class="table-info" id="subs-info"></div>
+          <nav class="pagination" id="subs-pagination" aria-label="Subscribers pagination"></nav>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span>SMMARIA Email Manager</span><span class="footer-sep">·</span><span>Subscribers</span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/subscribers.js"></script>
+</body>
+</html>

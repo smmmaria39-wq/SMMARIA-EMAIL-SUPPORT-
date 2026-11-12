@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Settings · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/style.css"/>
+<link rel="stylesheet" href="../assets/css/dashboard.css"/>
+<link rel="stylesheet" href="../assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="settings" data-root="../" data-title="Settings" data-crumb="System" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">System Settings</h1>
+          <p class="page-sub">Only settings the backend supports are shown and saved.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary" id="set-reload" type="button">
+            <i data-lucide="rotate-ccw" class="btn-icon"></i><span>Reload</span>
+          </button>
+          <button class="btn btn-primary" id="set-save" type="button" disabled>
+            <i data-lucide="save" class="btn-icon"></i><span>Save changes</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <nav class="tabs" id="set-tabs" role="tablist" aria-label="Settings sections">
+        <button class="tab active" data-tab="general" role="tab" aria-selected="true" type="button">General</button>
+        <button class="tab" data-tab="delivery" role="tab" aria-selected="false" type="button">Delivery</button>
+        <button class="tab" data-tab="campaigns" role="tab" aria-selected="false" type="button">Campaigns</button>
+        <button class="tab" data-tab="security" role="tab" aria-selected="false" type="button">Security</button>
+        <button class="tab" data-tab="notifications" role="tab" aria-selected="false" type="button">Notifications</button>
+        <button class="tab" data-tab="system" role="tab" aria-selected="false" type="button">System</button>
+      </nav>
+
+      <div class="state-box" id="set-state"></div>
+
+      <!-- Tab panels are rendered by settings.js from the backend response -->
+      <form id="set-form" novalidate>
+        <section class="set-panel" id="set-panel-general" role="tabpanel" aria-label="General settings"></section>
+        <section class="set-panel hidden" id="set-panel-delivery" role="tabpanel" aria-label="Delivery settings"></section>
+        <section class="set-panel hidden" id="set-panel-campaigns" role="tabpanel" aria-label="Campaign settings"></section>
+        <section class="set-panel hidden" id="set-panel-security" role="tabpanel" aria-label="Security settings"></section>
+        <section class="set-panel hidden" id="set-panel-notifications" role="tabpanel" aria-label="Notification settings"></section>
+        <section class="set-panel hidden" id="set-panel-system" role="tabpanel" aria-label="System health"></section>
+      </form>
+    </main>
+
+    <footer class="page-footer">
+      <span>SMMARIA Email Manager</span><span class="footer-sep">·</span><span>Settings</span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/settings.js"></script>
+</body>
+</html>

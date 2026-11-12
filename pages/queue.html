@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Email Queue · SMMARIA Email Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/style.css"/>
+<link rel="stylesheet" href="../assets/css/dashboard.css"/>
+<link rel="stylesheet" href="../assets/css/responsive.css"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11l8 6 8-6v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V11z' fill='%23fff' opacity='.9'/%3E%3Cpath d='M8 10a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1l-8 6-8-6z' fill='%23fff'/%3E%3C/svg%3E"/>
+</head>
+<body data-page="queue" data-root="../" data-title="Email Queue" data-crumb="Operations" class="pre-auth">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="main-wrapper">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content" id="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">Email Queue</h1>
+          <p class="page-sub">Monitor and manage queued, processing and failed email jobs.</p>
+        </div>
+        <div class="page-actions">
+          <label class="switch-label" for="queue-auto">
+            <span class="switch"><input type="checkbox" id="queue-auto" checked/><span class="slider" aria-hidden="true"></span></span>
+            <span>Auto-refresh</span>
+          </label>
+          <select id="queue-interval" class="form-input form-input-sm" aria-label="Auto-refresh interval">
+            <option value="5000">Every 5 s</option>
+            <option value="10000" selected>Every 10 s</option>
+            <option value="30000">Every 30 s</option>
+            <option value="60000">Every 60 s</option>
+          </select>
+          <button class="btn btn-primary" id="queue-refresh" type="button">
+            <i data-lucide="refresh-cw" class="btn-icon"></i><span>Refresh now</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Queue stats -->
+      <section class="kpi-grid kpi-grid-compact" id="queue-stats" aria-busy="true" aria-label="Queue statistics"></section>
+
+      <!-- Filters -->
+      <section class="card filter-bar" aria-label="Queue filters">
+        <div class="filter-grid">
+          <div class="input-wrap">
+            <i data-lucide="search" class="input-icon"></i>
+            <input type="search" id="queue-search" class="form-input has-icon" placeholder="Search by recipient or subject…" aria-label="Search queue jobs"/>
+          </div>
+          <select id="queue-status" class="form-input" aria-label="Filter by job status">
+            <option value="">All job statuses</option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+            <option value="failed">Failed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <button class="btn btn-ghost" id="queue-clear" type="button" title="Clear filters">
+            <i data-lucide="x" class="btn-icon"></i><span>Clear</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Table -->
+      <section class="card table-card">
+        <div class="table-wrap">
+          <table class="data-table" id="queue-table">
+            <thead>
+              <tr>
+                <th>Recipient</th><th>Subject</th><th>Status</th><th>Attempts</th><th>Created</th><th>Last attempt</th><th>Next retry</th><th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="state-box" id="queue-state" aria-live="polite"></div>
+        <div class="table-footer">
+          <div class="table-info" id="queue-info"></div>
+          <nav class="pagination" id="queue-pagination" aria-label="Queue pagination"></nav>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span>SMMARIA Email Manager</span><span class="footer-sep">·</span><span>Email Queue</span>
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/queue.js"></script>
+</body>
+</html>
