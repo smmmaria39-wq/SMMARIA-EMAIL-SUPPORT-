@@ -1,0 +1,188 @@
+/* ============================================================================
+   SMMARIA Email Manager — responsive.css
+   Breakpoints: 1280px (dense screens), 1024px (tablet), 768px (phablet),
+   560px (phones). Drawer sidebar, stacked cards, scrollable tables,
+   touch-friendly targets, no horizontal page overflow.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ */
+/* <= 1280px : denser desktop                                          */
+/* ------------------------------------------------------------------ */
+@media (max-width: 1280px) {
+  .kpi-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .kpi-grid-compact { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .kpi-value { font-size: 21px; }
+  .page-content { padding: 22px 22px 8px; }
+  .compose-layout { grid-template-columns: minmax(0, 1fr) 290px; }
+}
+
+/* ------------------------------------------------------------------ */
+/* <= 1120px : KPI 3-up, dashboard grid stacks at smaller width        */
+/* ------------------------------------------------------------------ */
+@media (max-width: 1120px) {
+  .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .kpi-grid-compact { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .dash-grid-2 { grid-template-columns: minmax(0, 1fr); }
+  .auto-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .health-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ------------------------------------------------------------------ */
+/* <= 1024px : tablet — sidebar collapses to rail, then drawer at 900px */
+/* ------------------------------------------------------------------ */
+@media (max-width: 1024px) {
+  .compose-layout { grid-template-columns: minmax(0, 1fr); }
+  .compose-side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .compose-side > .card { margin-bottom: 0; }
+  .filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .filter-grid .input-wrap:first-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 900px) {
+  /* Sidebar becomes an off-canvas drawer */
+  .main-wrapper, .app-shell.collapsed .main-wrapper { margin-left: 0; }
+
+  .sidebar {
+    transform: translateX(-104%);
+    width: var(--sidebar-w) !important;
+    box-shadow: none;
+    transition: transform .22s cubic-bezier(.4, 0, .2, 1);
+  }
+  .app-shell.drawer-open .sidebar { transform: translateX(0); box-shadow: var(--shadow-lg); }
+  .app-shell.drawer-open .sidebar-overlay { display: block; opacity: 1; }
+  .app-shell.collapsed .brand-text,
+  .app-shell.collapsed .nav-label { display: initial; }
+  .sidebar-collapse-btn { display: none; }
+  .sidebar-nav { padding-bottom: 40px; }
+
+  .mobile-toggle { display: grid; }
+  .topbar { padding: 0 16px; }
+  .topbar-crumb { display: none; }
+
+  .page-content { padding: 18px 16px 8px; }
+  .page-footer { padding: 12px 16px 18px; }
+
+  .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpi-grid-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ------------------------------------------------------------------ */
+/* <= 768px : large phones / small tablets                             */
+/* ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .page-head { flex-direction: column; align-items: stretch; }
+  .page-actions { width: 100%; }
+  .page-actions .btn { flex: 1 1 auto; justify-content: center; }
+
+  .auth-body { grid-template-columns: minmax(0, 1fr); }
+  .auth-brand { display: none; }
+  .auth-panel { padding: 28px 16px; }
+
+  .auto-summary { grid-template-columns: minmax(0, 1fr); }
+  .auto-card {
+    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+  }
+  .auto-icon { width: 42px; height: 42px; }
+  .auto-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    padding-top: 12px;
+    border-top: 1px solid var(--c-surface-2);
+  }
+
+  .compose-side { grid-template-columns: minmax(0, 1fr); }
+
+  .quick-actions { grid-template-columns: minmax(0, 1fr); }
+  .tpl-grid { grid-template-columns: minmax(0, 1fr); }
+
+  .form-grid-2 { grid-template-columns: minmax(0, 1fr); }
+
+  /* Modals become bottom sheets on small screens */
+  .modal-overlay { padding: 0; align-items: flex-end; }
+  .modal, .modal.modal-lg, .modal.modal-sm {
+    max-width: 100%;
+    border-radius: 18px 18px 0 0;
+    margin-bottom: 0;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-body { overflow-y: auto; }
+  .modal-foot { position: sticky; bottom: 0; background: var(--c-surface); padding-top: 12px; border-top: 1px solid var(--c-border); }
+  .modal-foot .btn { flex: 1 1 auto; justify-content: center; }
+
+  .toast-container { left: 12px; right: 12px; top: 12px; max-width: none; }
+
+  /* Tables stay usable: min-width forces a contained horizontal scroll
+     inside .table-wrap only — never the whole page. */
+  .data-table { min-width: 720px; }
+  #hist-table, #inv-table, #queue-table { min-width: 780px; }
+}
+
+/* ------------------------------------------------------------------ */
+/* <= 560px : phones                                                   */
+/* ------------------------------------------------------------------ */
+@media (max-width: 560px) {
+  .kpi-grid, .kpi-grid-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .kpi-card { padding: 13px 14px; gap: 10px; }
+  .kpi-icon { width: 34px; height: 34px; border-radius: 9px; }
+  .kpi-value { font-size: 19px; }
+
+  .filter-grid { grid-template-columns: minmax(0, 1fr); }
+
+  .range-picker { width: 100%; justify-content: space-between; }
+  .range-picker .chip { flex: 1; display: grid; place-items: center; }
+
+  .page-title { font-size: 20px; }
+  .page-actions { gap: 8px; }
+  .page-actions .btn { padding: 10px 12px; }   /* ≥40px touch target with border */
+  .btn-lg { min-height: 46px; }
+  .form-input { min-height: 44px; font-size: 16px; } /* 16px kills iOS zoom-on-focus */
+  select.form-input, textarea.form-input { min-height: 44px; }
+  .form-input-sm { min-height: 38px; font-size: 14px; }
+  .icon-btn { width: 42px; height: 42px; }
+
+  .topbar-title { font-size: 15px; }
+  .profile-meta { display: none; }
+  .profile-btn { padding: 4px; }
+
+  .table-footer { flex-direction: column; align-items: stretch; gap: 10px; }
+  .table-info { text-align: center; }
+  .pagination { justify-content: center; flex-wrap: wrap; }
+
+  .detail-grid { grid-template-columns: minmax(0, 1fr); gap: 2px 0; }
+  .detail-grid dt { margin-top: 9px; }
+  .detail-grid dd { margin-bottom: 2px; }
+
+  .compose-actions { flex-wrap: wrap; }
+  .compose-actions .btn { flex: 1 1 44%; }
+
+  .auth-card { padding: 26px 20px; }
+  .recipient-input-row { flex-wrap: wrap; }
+  .recipient-input-row .btn { flex: 1 1 100%; justify-content: center; }
+}
+
+/* ------------------------------------------------------------------ */
+/* <= 380px : narrow phones (iPhone SE etc.)                           */
+/* ------------------------------------------------------------------ */
+@media (max-width: 380px) {
+  .kpi-grid, .kpi-grid-compact { grid-template-columns: minmax(0, 1fr); }
+  .page-content { padding: 14px 12px 8px; }
+  .topbar { padding: 0 10px; gap: 8px; }
+  .card { padding: 15px; }
+  .card-head { flex-direction: column; align-items: flex-start; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion & print                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+@media print {
+  .sidebar, .topbar, .toast-container, .page-footer, .page-actions, .filter-bar, .bulk-bar { display: none !important; }
+  .main-wrapper { margin: 0 !important; }
+  body { background: #fff; }
+}
