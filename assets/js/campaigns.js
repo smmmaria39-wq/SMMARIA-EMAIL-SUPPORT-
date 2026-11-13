@@ -344,7 +344,8 @@
     /** Estimate recipients: optional endpoint → dashboard stats fallback. */
     function fetchRecipientEstimate(c) {
       var seg = c.segment || 'all';
-      return API.get(EP.recipients, { segment: seg })
+      // Backend exposes POST /campaigns/estimate and reads segment from req.query.
+      return API.post(EP.recipients, {}, { query: { segment: seg } })
         .then(function (r) {
           var v = typeof r === 'number' ? r : (r && (r.count || r.total || r.recipients));
           if (v === undefined || v === null) throw new Error('no count');
