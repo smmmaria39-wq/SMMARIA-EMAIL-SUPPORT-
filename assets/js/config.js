@@ -80,7 +80,7 @@ var EMAIL_SYSTEM_CONFIG = {
 
     /* ---- Dashboard (required) --------------------------------------- */
     dashboard: {
-      stats:    '/api/admin/dashboard/stats',  // GET -> aggregate counters
+      stats:    '/api/admin/dashboard',  // GET -> aggregate counters
       activity: '/api/admin/dashboard/activity' // GET ?days=14 -> time series
     },
 
@@ -96,13 +96,13 @@ var EMAIL_SYSTEM_CONFIG = {
       schedule:  '/api/admin/campaigns/:id/schedule',    // POST  { scheduled_at }
       cancel:    '/api/admin/campaigns/:id/cancel',      // POST
       preview:   '/api/admin/campaigns/:id/preview',     // GET   (optional — fallback: client render)
-      recipients:'/api/admin/campaigns/recipients-estimate' // GET ?segment=all (optional)
+      recipients:'/api/admin/campaigns/estimate' // GET ?segment=all (optional)
     },
 
     /* ---- Transactional compose (required) --------------------------- */
     compose: {
-      send:   '/api/admin/emails/send',  // POST { to[], subject, html, text?, sender_name?, sender_email?, type? }
-      test:   '/api/admin/emails/test',  // POST { to, subject, html }  (optional)
+      send:   '/api/admin/send',  // POST { to[], subject, html, text?, sender_name?, sender_email?, type? }
+      test:   '/api/admin/send/test',  // POST { to, subject, html }  (optional)
       upload: '/api/admin/upload'        // POST multipart (file) -> { url } (optional — inline base64 fallback)
     },
 
@@ -120,9 +120,9 @@ var EMAIL_SYSTEM_CONFIG = {
 
     /* ---- Email history (required) ----------------------------------- */
     emails: {
-      list:  '/api/admin/emails',       // GET ?page&limit&search&status&type&from&to
-      get:   '/api/admin/emails/:id',   // GET  (includes attempts + provider response)
-      retry: '/api/admin/emails/:id/retry' // POST (optional)
+      list:  '/api/admin/history',       // GET ?page&limit&search&status&type&from&to
+      get:   '/api/admin/history/:id',   // GET  (includes attempts + provider response)
+      retry: '/api/admin/history/:id/retry' // POST (optional)
     },
 
     /* ---- Templates (required) --------------------------------------- */
@@ -159,7 +159,7 @@ var EMAIL_SYSTEM_CONFIG = {
       get:    '/api/admin/invoices/:id',       // GET  (includes email history)
       send:   '/api/admin/invoices/:id/send',  // POST
       resend: '/api/admin/invoices/:id/resend',// POST
-      pdf:    '/api/admin/invoices/:id/pdf'    // GET  -> application/pdf (optional)
+      pdf:    '/api/admin/invoices/:id/download'    // GET  -> application/pdf (optional)
     },
 
     /* ---- Analytics (required) --------------------------------------- */
@@ -188,7 +188,7 @@ var EMAIL_SYSTEM_CONFIG = {
     settings: {
       get:    '/api/admin/settings', // GET  -> current settings (omit secrets!)
       update: '/api/admin/settings', // PUT  { ...changed fields }
-      health: '/api/admin/health'    // GET  -> backend / provider / queue health
+      health: '/api/admin/settings/health'    // GET  -> backend / provider / queue health
     },
 
     /* ---- Notifications (optional) ----------------------------------- */
