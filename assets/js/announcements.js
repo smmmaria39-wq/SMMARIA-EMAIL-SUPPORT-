@@ -245,7 +245,8 @@
     }
 
     function estimateRecipients() {
-      return API.get(CFG.ENDPOINTS.campaigns.recipients, { segment: 'active' })
+      // Backend exposes POST /campaigns/estimate and reads segment from req.query.
+      return API.post(CFG.ENDPOINTS.campaigns.recipients, {}, { query: { segment: 'active' } })
         .then(function (r) {
           var v = typeof r === 'number' ? r : (r && (r.count || r.total || r.recipients));
           if (v === undefined || v === null) throw new Error('no count');
